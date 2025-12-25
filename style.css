@@ -1,0 +1,144 @@
+/* ================= HERO SECTION ONLY ================= */
+
+/* Targets the main container */
+.hero {
+    height: 95vh;
+    background: url("images/intro1.jpg") center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Dark overlay specific to hero */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(0,0,0,0.85),
+        rgba(0,0,0,0.6)
+    );
+}
+
+/* Ensures content sits above the overlay */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #ffffff;
+    max-width: 1000px;
+    text-align: center;
+    padding: 40px;
+}
+
+/* Specifically targets the Title only in the Hero */
+.hero-content h1 {
+    font-size: 76px;
+    margin-bottom: 50px;
+    text-shadow: 0 8px 24px rgba(0,0,0,1);
+    color: #ffffff; /* Forces white even if global body text is dark */
+}
+
+/* Specifically targets the Subtitle only in the Hero */
+.hero-sub {
+    font-size: 40px;
+    margin-bottom: 40px;
+    text-shadow: 0 5px 18px rgba(1,1,1,1);
+    color: #ffffff;
+    line-height: 1.4;
+}
+
+/* Specifically targets the Metadata lines only in the Hero */
+.hero-meta p {
+    font-size: 40px;
+    margin: 30px 0; /* Tight spacing for the name/university lines */
+    text-shadow: 0 4px 14px rgba(1,1,1,1);
+    color: #ffffff;
+}
+
+/* ================= CONTENT ================= */
+.content {
+    max-width: 1100px;
+    margin: 100px auto;
+    padding: 0 25px;
+}
+
+h2 {
+    font-size: 50px;
+    margin-bottom: 30px;
+}
+
+h3 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+p, li {
+    font-size: 25px;
+}
+
+ul {
+    padding-left: 30px;
+}
+
+/* ================= IMAGES ================= */
+.single-image img {
+    width: 100%;
+    margin: 50px 0 15px;
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+.caption {
+    text-align: center;
+    font-size: 18px;
+    color: #444;
+}
+
+/* ================= GRID ================= */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.grid.reverse img {
+    order: -1;
+}
+
+.grid img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+/* ================= RESULTS GRID ================= */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+    margin-top: 60px;
+}
+
+.results-grid img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+.results-grid p {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 12px;
+}
+
+/* ================= FOOTER ================= */
+footer {
+    background: #ffffff;
+    text-align: center;
+    padding: 30px;
+    font-size: 16px;
+    border-top: 1px solid #ddd;
+}

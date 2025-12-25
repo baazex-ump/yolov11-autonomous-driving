@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>YOLOv11 Autonomous Driving System | Final Year Project</title>
+
+    <!-- Official description (used by Google, WhatsApp, QR previews) -->
+    <meta name="description" content="YOLOv11-based autonomous driving system for real-time traffic sign detection and embedded deployment on Raspberry Pi 5.">
+
+    <meta name="author" content="Ahmed Abd Elmoneim Mohammed">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>YOLOv11 Autonomous Driving System</h1>
+
+        <p class="hero-sub">
+            A real-time vision-based autonomous driving system for intelligent traffic
+            sign detection and autonomous navigation on embedded platforms.
+        </p>
+
+        <div class="hero-meta">
+            <p><strong>Prepared by:</strong> Ahmed Abd Elmoneim Mohammed</p>
+            <p><strong>Supervised by:</strong> Mr. Khairul Fikri Bin Muhammad</p>
+            <p>Universiti Malaysia Pahang Al-Sultan Abdullah</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= INTRODUCTION ================= -->
+<section class="content">
+    <h2>General Introduction</h2>
+
+    <p>
+        This project presents the development of a YOLOv11-based autonomous driving system
+        designed for real-time perception and navigation on embedded hardware. The system
+        integrates a deep learning object detection model to enable efficient visual
+        understanding of traffic environments. Visual input captured by an onboard camera
+        is analysed to detect traffic signs and navigation cues. The detection outputs are
+        translated into autonomous driving decisions such as stopping, turning, or
+        continuing forward motion.
+    </p>
+
+    <div class="single-image">
+        <img src="images/intro3.jpg" alt="System workflow diagram">
+    </div>
+</section>
+
+<!-- ================= OBJECTIVES ================= -->
+<section class="content">
+    <h2>Objectives</h2>
+    <ul>
+        <li>To develop an embedded real-time object-detection module using YOLOv11.</li>
+        <li>To optimise YOLOv11 inference performance through NCNN deployment.</li>
+        <li>To design an autonomous navigation mechanism informed by detection outputs.</li>
+        <li>To evaluate system performance in accuracy, latency and navigation stability.</li>
+    </ul>
+</section>
+
+<!-- ================= SCOPE ================= -->
+<section class="content">
+    <h2>Scope</h2>
+    <ul>
+        <li>The study focuses on developing an embedded autonomous driving system using YOLOv11 
+for real-time object detection.</li>
+        <li>NCNN is utilised as the primary inference engine to optimise model performance on low
+power hardware.</li>
+        <li>The system includes camera-based perception, detection-driven navigation and basic 
+obstacle-avoidance capability.</li>
+        <li>The system includes camera-based perception, detection-driven navigation and basic 
+obstacle-avoidance capability.</li>
+        
+    </ul>
+</section>
+
+<!-- ================= DELIMITATIONS  ================= -->
+<section class="content">
+    <h2>Delimitations</h2>
+    <ul>
+        <li>The system does not incorporate GPS, LiDAR, radar or multi-sensor fusion technologies. </li>
+        <li>High-speed vehicular dynamics and full-scale automotive deployment are outside the studys 
+scope. </li>
+        <li>Cloud-based processing and external GPU acceleration are excluded; all inference is 
+performed locally.</li>
+        <li>Long-range path planning and advanced SLAM algorithms are not implemented.</li>
+        <li>Environmental robustness (e.g., rain, night-time driving, harsh terrain) is not addressed.</li>
+        
+    </ul>
+</section>
+
+<!-- ================= HARDWARE ================= -->
+<section class="content">
+    <h2>Hardware Components</h2>
+
+    <div class="grid">
+        <div class="grid-text">
+            <h3>Raspberry Pi 5</h3>
+            <p>The Raspberry Pi 5 serves as the central processing unit of the system. Compared to earlier 
+Raspberry Pi versions, the Raspberry Pi 5 offers improved CPU performance, higher memory 
+bandwidth, and enhanced I/O capabilities. The 8GB RAM configuration provides sufficient 
+memory for loading optimized deep learning models and handling image data during inference. 
+This platform was chosen due to its compatibility with the NCNN inference engine, which 
+allows efficient execution of deep learning models without requiring GPU acceleration. The 
+Raspberry Pi 5 thus represents a practical embedded platform for evaluating real-time object 
+detection in autonomous driving research.</p>
+        </div>
+        <img src="images/pi.jpg" alt="Raspberry Pi">
+    </div>
+
+    <div class="grid reverse">
+        <img src="images/camera.jpg" alt="Camera Module">
+        <div class="grid-text">
+            <h3>Camera Module</h3>
+            <p>The Pi Camera module is responsible for real-time image acquisition. It captures frames that 
+are subsequently processed by the YOLOv11 detection model. Camera parameters such as 
+resolution and frame rate were configured to balance detection accuracy and inference speed. </p>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="grid-text">
+            <h3>Motor Driver and Motors</h3>
+            <p>The Robot HAT functions as the hardware interface between the Raspberry Pi and the vehicle’s 
+actuators and sensors. It manages motor driving signals, power regulation, and peripheral 
+connections. By abstracting low-level hardware control, the Robot HAT simplifies system 
+integration and enhances operational reliability.</p>
+        </div>
+        <img src="images/motor_driver.jpg" alt="Motor Driver">
+    </div>
+
+    <div class="grid reverse">
+        <img src="images/sensor.jpg" alt="Grayscale Sensor">
+        <div class="grid-text">
+            <h3>Grayscale Sensors</h3>
+            <p>The grayscale sensor is used to detect lane boundaries and guide the vehicle’s movement along 
+predefined paths. The sensor operates by measuring reflected light intensity from the surface 
+beneath the vehicle. Variations in reflectance allow the system to distinguish between lane 
+markings and surrounding areas. 
+This sensor-based approach complements vision-based detection by providing fast and 
+deterministic feedback for navigation, reducing reliance on computationally intensive image 
+processing.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= VALIDATION ================= -->
+<section class="content">
+    <h2>Training Overview and Model Summary </h2>
+
+    <p>
+        The YOLO-based traffic sign detection model was trained using a curated and annotated dataset developed in Chapter 3. Training was performed on Google Colab to utilize high-performance GPU resources, ensuring efficient convergence and reduced training time.
+
+Over multiple epochs, the model learned to accurately identify key traffic sign classes, including U-turn, No Entry, Pedestrian Crossing, and Turn Left. During training, model parameters were optimized through backpropagation to minimize classification, localization, and confidence losses.
+
+The resulting model employs a deep convolutional architecture optimized for real-time object detection, achieving a balance between detection accuracy and computational efficiency. This makes the trained model well-suited for deployment on embedded platforms such as the Raspberry Pi 5.
+    </p>
+<div class="grid">
+        <div class="grid-text">
+            <h3>Training Overview</h3>
+            <p>The training results indicate stable and effective learning behavior throughout the process. Both training and validation losses consistently decrease, showing improved accuracy in object localization and classification without signs of overfitting.
+
+Precision and recall rapidly reach high values, demonstrating reliable detection performance with minimal false detections. Additionally, the increasing mean Average Precision (mAP) values confirm strong detection accuracy across different IoU thresholds. Overall, the model achieves a good balance between accuracy and efficiency, making it suitable for real-time deployment on embedded systems such as the Raspberry Pi 5.</p>
+        </div>
+        <img src="images/training_overview.jpg" alt="training overview">
+    </div>
+
+    <div class="grid">
+        <div class="grid-text">
+            <h3>Training Loss</h3>
+            <p>Training loss decreases smoothly, indicating effective learning behaviour.</p>
+        </div>
+        <img src="images/loss_train.jpg" alt="Training loss">
+    </div>
+
+    <div class="grid reverse">
+        <img src="images/loss_val.jpg" alt="Validation loss">
+        <div class="grid-text">
+            <h3>Validation Loss</h3>
+            <p>Validation loss closely follows training loss, demonstrating minimal overfitting.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= RESULTS ================= -->
+<section class="content">
+    <h2>Visual Detection Results</h2>
+
+    <p>
+        A crucial stage in the validation of object detecting systems is visual examination.  The 
+qualitative findings show that the model can reliably identify and categorize traffic signs in real 
+time. 
+Sample detection results for each of the four traffic sign classes are shown in Figure 4.7.  
+Bounding boxes are used to encompass the detected signals, which are then labelled with the 
+class names and confidence ratings that correspond to them. 
+The model successfully identifies: 
+U-Turn signs with confidence scores up to 0.98,
+ ,No Entry signs with confidence scores up to 0.97 
+ ,Pedestrian Crossing signs with confidence scores up to 0.97 
+ ,Turn Left signs with confidence scores up to 0.97.
+    </p>
+
+    <!-- FULL TRAFFIC SIGNS IMAGE (FIXED) -->
+    <div class="single-image">
+        <img src="images/visual_all_signs.jpg" alt="All traffic signs detected">
+        <p class="caption"><strong>Figure:</strong> Detection of multiple traffic signs with correct localisation.</p>
+    </div>
+
+    <!-- INDIVIDUAL RESULTS -->
+    <div class="results-grid">
+        <div>
+            <img src="images/visual_noentry.jpg">
+            <p><strong>No Entry Sign</strong></p>
+        </div>
+
+        <div>
+            <img src="images/visual_uturn.jpg">
+            <p><strong>U-Turn Sign</strong></p>
+        </div>
+
+        <div>
+            <img src="images/visual_pedestrian.jpg">
+            <p><strong>Pedestrian Crossing Sign</strong></p>
+        </div>
+
+        <div>
+            <img src="images/visual_turnleft.jpg">
+            <p><strong>Turn Left Sign</strong></p>
+        </div>
+    </div>
+</section>
+<section class="content">
+    <h2>Project Information</h2>
+    <ul>
+        <li><strong>Project Type:</strong> Final Year Project (FYP)</li>
+        <li><strong>Field:</strong> Embedded Systems & Autonomous Robotics</li>
+        <li><strong>Institution:</strong> Universiti Malaysia Pahang Al-Sultan Abdullah</li>
+        <li><strong>Year:</strong> 2026</li>
+    </ul>
+</section>
+
+
+
+<footer>
+    <p>
+        © 2026 Ahmed Abd Elmoneim Mohammed<br>
+        Final Year Project (FYP)<br>
+        Universiti Malaysia Pahang Al-Sultan Abdullah
+    </p>
+</footer>
+
+</body>
+</html>
